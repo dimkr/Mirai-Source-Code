@@ -10,7 +10,7 @@ leaks, if you want to know how it is all set up and the likes.
 
 This is a fork of Mirai that uses [papaw](http://github.com/dimkr/papaw) to
 compress the malware binaries, make them harder to research (by providing some
-basic means of anti-debugging) and allow self-deletion.
+basic means of anti-debugging) and allow fileless execution.
 
 It's useful for testing anti-virus software for Linux, which is supposed to
 detect at least the original Mirai binaries as malicious. Is that anti-virus
