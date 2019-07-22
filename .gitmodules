@@ -1,0 +1,3 @@
+[submodule "mirai/papaw"]
+	path = mirai/papaw
+	url = https://github.com/dimkr/papaw
